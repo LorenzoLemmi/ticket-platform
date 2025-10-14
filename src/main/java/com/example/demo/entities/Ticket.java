@@ -3,6 +3,8 @@ package com.example.demo.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,14 +34,6 @@ public class Ticket {
     @Column(name="descrizione", nullable=false)
     private String descrizione;
 
-    public List<Nota> getNoteList() {
-        return noteList;
-    }
-
-    public void setNoteList(List<Nota> noteList) {
-        this.noteList = noteList;
-    }
-
     public enum StatoTicket {
         DA_FARE,
         IN_CORSO,
@@ -51,6 +45,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private StatoTicket stato;
 
+    @CreationTimestamp
     @NotNull(message = "La data e l'orario di creazione sono obbligatori")
     @Column(name="data_creazione", nullable=false)
     private LocalDateTime dataCreazione;
@@ -122,5 +117,11 @@ public class Ticket {
         this.stato = stato;
     }
 
-    
+    public List<Nota> getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(List<Nota> noteList) {
+        this.noteList = noteList;
+    }
 }

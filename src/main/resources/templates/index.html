@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <title>Ticket Platform</title>
+</head>
+<body>
+
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="d-flex justify-content-end align-items-center col-12 mt-3">
+                
+                <!-- Barra di ricerca -->
+                <div class="align-items-center d-flex justify-content-end">
+                <form method="get" th:action="@{/tickets}">
+                    <div class="input-group input-group-sm" style="max-width: 250px;">
+                        <input name="keyword" type="search" class="form-control" placeholder="Cerca...">
+                        <button class="btn btn-secondary" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                </div>
+
+                <!--Bottone-->
+                <a href="/tickets/create" class="ms-4 btn btn-secondary">Aggiungi ticket</a>
+            </div>
+        </div>
+
+        <div class="table-responsive p-5">
+
+            <table class="table align-middle table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">Tickets</th>
+                        <th class="text-center">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${ticketList!=null and !ticketList.isEmpty()}" th:each="item : ${ticketList}">
+                                <td th:text="item.titolo">Titolo ticket</td>
+                                <td class="text-center">
+                                    <form th:action="@{|/tickets/show/${item.id}|}" method="post">
+                                        <button class="btn btn-info btn-sm" type="submit">Dettagli</button>
+                                    </form>
+                                    <form th:action="@{|/tickets/update/${item.id}}" method="post">
+                                        <button class="btn btn-warning btn-sm" type="submit">Modifica</button>
+                                    </form>
+                                    <form th:action="@{|/tickets/delete/{item.id}}" method="post">
+                                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Sei sicuro?')">Cancella</button>
+                                    </form>
+                                    <form th:action="" method="post"></form>
+                                </td>
+                            </li>
+                        </ul>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-primary mt-3" role="alert" th:if="${ticketList==null or ticketList.isEmpty()}">
+                <span>Non è presente nessun ticket</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

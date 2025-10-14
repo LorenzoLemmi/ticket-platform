@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <title>Ticket Platform</title>
+</head>
+<body>
+
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container mt-4">
+
+        <h1>Crea un nuovo ticket</h1>
+
+        <form id="ticket-form" th:object="${ticket}" action="@{/tickets/create}" method="post">
+            <div class="row mt-4">
+                <div class="col-md-7">
+                    <!-- Titolo -->
+                    <div class="mb-3">
+                        <label for="titolo" class="form-label">Titolo</label>
+                        <input type="text" id="titolo" class="form-control" th:field="*{titolo}" required th:errorClass="is-invalid">
+                    </div>
+                    <!--Descrizione-->
+                    <div class="mb3">
+                        <label for="descrizione" class="form-label">Descrizione</label>
+                        <textarea th:field="*{descrizione}" name="descrizione" id="descrizione" rows="6" class="form-control" placeholder="Scrivi la descrizione del ticket"></textarea>
+                    </div>
+                    <!--Stato-->
+                    <div class="my-3">
+                        <label for="stato" class="form-label">Stato</label>
+                        <select th:field="*{stato}" class="form-select" id="stato">
+                            <option value="DA_FARE">Da fare</option>
+                            <option value="IN_CORSO">In corso</option>
+                            <option value="COMPLETATO">Completato</option>
+                        </select>
+                    </div>
+            </div>
+        </form>
+
+    </div>
+    
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
