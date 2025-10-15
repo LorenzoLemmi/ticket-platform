@@ -12,9 +12,9 @@
 
     <div class="container mt-4">
 
-        <h1 class="ps-2">Crea un nuovo ticket</h1>
+        <h1 class="ps-2">Modifica ticket</h1>
 
-        <form id="ticket-form" th:object="${ticket}" th:action="@{/tickets/create}" method="post">
+        <form id="ticket-form" th:object="${ticket}" th:action="@{|/tickets/update/${ticket.id}|}" method="post">
             
             <div class="row mt-4">
                 <div class="col-md-12">

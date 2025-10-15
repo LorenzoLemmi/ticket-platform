@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entities.Nota;
 import com.example.demo.entities.Ticket;
+import com.example.demo.repositories.CategoriaRepository;
 import com.example.demo.repositories.NotaRepository;
 import com.example.demo.repositories.TicketRepository;
 
@@ -31,6 +32,8 @@ public class TicketController {
     private TicketRepository ticketRepository;
     @Autowired
     private NotaRepository notaRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @GetMapping
     public String showIndex(Model model, @RequestParam(name = "keyword", required=false) String keyword) {
@@ -63,7 +66,8 @@ public class TicketController {
 
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("list", ticketRepository.findAll());
+        model.addAttribute("categorieList", categoriaRepository.findAll());
+        model.addAttribute("ticketList", ticketRepository.findAll());
         model.addAttribute("ticket", new Ticket());
         return "createForm";
     }
@@ -77,7 +81,8 @@ public class TicketController {
             bindingResult.addError(new ObjectError("nome", "Nome già presente"));
         }
         if (bindingResult.hasErrors()) {
-            model.addAttribute("list", ticketRepository.findAll());
+            model.addAttribute("categorieList", categoriaRepository.findAll());
+            model.addAttribute("ticketList", ticketRepository.findAll());
             return "createForm";
         }
         ticketRepository.save(formTicket);
@@ -88,7 +93,8 @@ public class TicketController {
 
     @GetMapping("/update/{id}")
     public String updateTicket(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("list", ticketRepository.findAll());
+        model.addAttribute("categorieList", categoriaRepository.findAll());
+        model.addAttribute("ticketList", ticketRepository.findAll());
         model.addAttribute("ticket", ticketRepository.findById(id).get());
         return "updateForm";
     }
@@ -101,7 +107,8 @@ public class TicketController {
             bindingResult.addError(new ObjectError("titolo", "Non è possibile modificare il titolo del ticket"));
         }
         if (bindingResult.hasErrors()) {
-            model.addAttribute("list", ticketRepository.findAll());
+            model.addAttribute("categorieList", categoriaRepository.findAll());
+            model.addAttribute("ticketList", ticketRepository.findAll());
             return "updateForm";
         }
         ticketRepository.save(formTicket);

@@ -45,18 +45,13 @@
                 </thead>
                 <tbody>
                     <tr th:if="${ticketList!=null and !ticketList.isEmpty()}" th:each="item : ${ticketList}">
-                                <td th:text="item.titolo">Titolo ticket</td>
+                                <td class="text-center" th:text="${item.titolo}">Titolo ticket</td>
                                 <td class="text-center">
-                                    <form th:action="@{|/tickets/show/${item.id}|}" method="post">
-                                        <button class="btn btn-info btn-sm" type="submit">Dettagli</button>
-                                    </form>
-                                    <form th:action="@{|/tickets/update/${item.id}}" method="post">
-                                        <button class="btn btn-warning btn-sm" type="submit">Modifica</button>
-                                    </form>
-                                    <form th:action="@{|/tickets/delete/{item.id}}" method="post">
+                                    <a th:href="@{|/tickets/show/${item.id}|}" class="btn btn-primary btn-sm">Dettagli</a>
+                                    <a th:href="@{|/tickets/update/${item.id}|}" class="btn btn-primary btn-sm">Modifica</a>
+                                    <form th:action="@{|/tickets/delete/{item.id}}" method="post" class="d-inline">
                                         <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Sei sicuro?')">Cancella</button>
                                     </form>
-                                    <form th:action="" method="post"></form>
                                 </td>
                             </li>
                         </ul>
