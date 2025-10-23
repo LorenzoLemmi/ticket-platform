@@ -16,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -35,9 +37,9 @@ public class Ticket {
     private String descrizione;
 
     public enum StatoTicket {
-        DA_FARE,
-        IN_CORSO,
-        COMPLETATO
+        da_fare,
+        in_corso,
+        completato;
     }
 
     @NotNull(message = "Lo dichiarazione dello stato del ticket è obbligatoria")
@@ -46,7 +48,6 @@ public class Ticket {
     private StatoTicket stato;
 
     @CreationTimestamp
-    @NotNull(message = "La data e l'orario di creazione sono obbligatori")
     @Column(name="data_creazione", nullable=false)
     private LocalDateTime dataCreazione;
 

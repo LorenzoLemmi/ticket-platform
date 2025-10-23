@@ -32,6 +32,21 @@ public class Operatore {
     @Column(name="ruolo", nullable=false)
     private String ruolo;
 
+    public enum StatoOperatore {
+        disponibile,
+        non_disponibile
+    }
+
+    @Column(name="stato", length = 30)
+    @Enumerated(EnumType.STRING)
+    private StatoOperatore stato;
+
+    @OneToMany(mappedBy="operatore")
+    private List<Ticket> ticketsList;
+
+    @OneToMany(mappedBy="operatore")
+    private List<Nota> noteList;
+
     public List<Ticket> getTicketsList() {
         return ticketsList;
     }
@@ -48,21 +63,6 @@ public class Operatore {
         this.noteList = noteList;
     }
     
-    public enum StatoOperatore {
-        DISPONIBILE,
-        NON_DISPONIBILE
-    }
-
-    @Column(name="stato")
-    @Enumerated(EnumType.STRING)
-    private StatoOperatore stato;
-
-    @OneToMany(mappedBy="operatore")
-    private List<Ticket> ticketsList;
-
-    @OneToMany(mappedBy="operatore")
-    private List<Nota> noteList;
-
     public Integer getId() {
         return id;
     }

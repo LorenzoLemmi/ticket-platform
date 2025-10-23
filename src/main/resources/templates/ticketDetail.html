@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet">
+    <title>Dettagli Ticket</title>
+</head>
+<body>
+
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container mt-4">
+
+        <!-- Caso: ticket non trovato -->
+        <div th:if="${empty}" class="alert alert-danger">
+            Ticket non trovato.
+        </div>
+
+        <!-- Caso: ticket trovato -->
+        <div th:if="${!empty}">
+            
+            <div class="card shadow p-4">
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <h2 th:text="${ticket.titolo}">Titolo</h2>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <form th:action="@{|/tickets/updateStatus/${ticket.id}|}" method="post" class="d-inline">
+                            <select name="stato" class="form-select form-select-sm text-white bg-primary border-0 d-inline w-auto" onchange="this.form.submit()">
+                                <option value="da_fare" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).da_fare}">Da fare</option>
+                                <option value="in_corso" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).in_corso}">In corso</option>
+                                <option value="completato" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).completato}">Completato</option>
+                            </select>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                <div class="mb-3">
+                    <h5>Descrizione</h5>
+                    <p th:text="${ticket.descrizione}">Descrizione</p>
+                </div>
+
+                <div class="mb-3">
+                    <h5>Categoria</h5>
+                    <p th:text="${ticket.categoria.nome}">Categoria</p>
+                </div>
+
+                <div class="mb-3">
+                    <h5>Operatore assegnato</h5>
+                    <p th:text="${ticket.operatore != null ? ticket.operatore.nome : 'Non assegnato'}"></p>
+                </div>
+
+                <div class="mb-3">
+                    <h5>Data di creazione</h5>
+                        <p th:text="${#temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</p>
+                </div>
+
+
+                <div class="text-end">
+                    <a th:href="@{/tickets}" class="btn btn-secondary btn-sm">Torna ai tickets</a>
+                </div>
+
+                <div class="my-3 text-end">
+                    <a th:href="@{|/note/crea/${ticket.id}|}" class="btn btn-success btn-sm">
+                        Nuova Nota
+                    </a>
+                </div>
+
+                <!-- Lista note -->
+                <div class="mt-4">
+                    <h5>Note</h5>
+
+                    <div th:if="${ticket.noteList.empty}" class="alert alert-secondary">
+                        Nessuna nota presente.
+                    </div>
+
+                    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+                        successMessage
+                    </div>
+
+                    <div th:each="nota : ${ticket.noteList}" class="card mb-2 p-2 shadow-sm">
+                        <p th:text="${nota.testo}">Testo della nota</p>
+                        <span th:text="${nota.operatore != null ? nota.operatore.nome : 'N/A'}">Operatore</span>
+                        <small class="text-muted" th:text="${#temporals.format(nota.dataCreazione, 'dd/MM/yyyy HH:mm')}">Data</small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
+

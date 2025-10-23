@@ -30,7 +30,8 @@
                 </div>
 
                 <!--Bottone-->
-                <a href="/tickets/create" class="ms-4 btn btn-secondary">Aggiungi ticket</a>
+                <a th:href="@{/tickets/create}" class="ms-4 btn btn-secondary">Aggiungi ticket</a>
+
             </div>
         </div>
 
@@ -45,16 +46,19 @@
                 </thead>
                 <tbody>
                     <tr th:if="${ticketList!=null and !ticketList.isEmpty()}" th:each="item : ${ticketList}">
-                                <td class="text-center" th:text="${item.titolo}">Titolo ticket</td>
-                                <td class="text-center">
-                                    <a th:href="@{|/tickets/show/${item.id}|}" class="btn btn-primary btn-sm">Dettagli</a>
-                                    <a th:href="@{|/tickets/update/${item.id}|}" class="btn btn-primary btn-sm">Modifica</a>
-                                    <form th:action="@{|/tickets/delete/{item.id}}" method="post" class="d-inline">
-                                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Sei sicuro?')">Cancella</button>
-                                    </form>
-                                </td>
-                            </li>
-                        </ul>
+                        <td class="text-center" th:text="${item.titolo}">Titolo ticket</td>
+                        <td class="text-center">
+                            <a th:href="@{|/tickets/show/${item.id}|}" class="btn btn-primary btn-sm">Dettagli</a>
+                            <a th:href="@{|/tickets/update/${item.id}|}" class="btn btn-primary btn-sm">Modifica</a>
+                            <form th:action="@{|/tickets/delete/${item.id}}" method="post" class="d-inline">
+                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Sei sicuro?')">Cancella</button>
+                            </form>
+
+                            <a th:href="@{|/note/crea/${item.id}|}" 
+                                class="btn btn-outline-secondary btn-sm ms-4">
+                                + Nota
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

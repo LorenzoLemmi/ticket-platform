@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Nota</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Nuova nota</h2>
+
+        <div th:if="${empty}" class="alert alert-danger">
+            Ticket non trovato.
+        </div>
+
+        <div th:if="${!empty}">
+            <form th:action="@{|/note/crea/${nota.ticket.id}|}" th:object="${nota}" method="post">
+                <div class="mb-3">
+                    <textarea id="testo" class="form-control" th:field="*{testo}" rows="4" 
+                            placeholder="Testo della nota" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Salva</button>
+                <a th:href="@{/tickets}" class="btn btn-secondary">Annulla</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
