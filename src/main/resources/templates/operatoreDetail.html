@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Operatore</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+
+    <h2>Dettaglio Operatore</h2>
+
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Form di aggiornamento dati operatore -->
+    <form th:action="@{|/operatori/${operatore.id}/update|}" method="post" class="mb-4">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" id="nome" name="nome" th:value="${operatore.nome}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" th:value="${operatore.email}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="statoPersonale" class="form-label">Stato Personale</label>
+            <select id="statoPersonale" name="statoPersonale" class="form-select">
+                <option th:each="stato : ${statiOperatore}"
+                        th:value="${stato}"
+                        th:text="${stato}"
+                        th:selected="${stato == operatore.stato}">
+                </option>
+            </select>
+            <small class="text-muted">Non puoi impostare "non attivo" se hai ticket attivi.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Aggiorna</button>
+        <a th:href="@{/operatori}" class="btn btn-secondary ms-2">Torna alla lista</a>
+    </form>
+
+    <!-- Lista dei ticket assegnati all'operatore -->
+    <h4>Ticket assegnati</h4>
+    <div th:if="${ticketList.empty}" class="alert alert-secondary">
+        Nessun ticket assegnato.
+    </div>
+
+    <div th:if="${!ticketList.empty}" class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Titolo</th>
+                    <th>Stato</th>
+                    <th>Categoria</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ticket : ${ticketList}">
+                    <td th:text="${ticket.titolo}">Titolo</td>
+                    <td th:text="${ticket.stato}">Stato</td>
+                    <td th:text="${ticket.categoria.nome}">Categoria</td>
+                    <td>
+                        <a th:href="@{|/tickets/show/${ticket.id}|}" class="btn btn-sm btn-primary">Dettagli</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

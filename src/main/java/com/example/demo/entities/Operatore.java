@@ -34,7 +34,8 @@ public class Operatore {
 
     public enum StatoOperatore {
         disponibile,
-        non_disponibile
+        non_disponibile,
+        non_attivo
     }
 
     @Column(name="stato", length = 30)

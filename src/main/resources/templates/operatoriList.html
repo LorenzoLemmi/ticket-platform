@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Operatori</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+
+    <h2>Lista Operatori</h2>
+
+    <div th:if="${operatoriList.empty}" class="alert alert-secondary">
+        Nessun operatore presente.
+    </div>
+
+    <div th:if="${!operatoriList.empty}" class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Stato Personale</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="operatore : ${operatoriList}">
+                    <td th:text="${operatore.nome}">Nome</td>
+                    <td th:text="${operatore.email}">Email</td>
+                    <td th:text="${operatore.stato}">Stato</td>
+                    <td>
+                        <a th:href="@{|/operatori/${operatore.id}|}" class="btn btn-sm btn-primary">Dettagli</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
