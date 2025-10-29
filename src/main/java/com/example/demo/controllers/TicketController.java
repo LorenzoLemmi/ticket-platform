@@ -147,6 +147,7 @@ public class TicketController {
 
     @GetMapping("/update/{id}")
     public String updateTicket(@PathVariable("id") Integer id, Model model) {
+        System.out.println("DEBUG - GetMapping");
         model.addAttribute("categorieList", categoriaRepository.findAll());
         model.addAttribute("ticketList", ticketRepository.findAll());
         model.addAttribute("ticket", ticketRepository.findById(id).get());
@@ -158,17 +159,21 @@ public class TicketController {
                                 @RequestParam("categoriaId") Integer categoriaId, BindingResult bindingResult,
                                 Model model) {
         Ticket oldTicket = ticketRepository.findById(formTicket.getId()).get();
-        if (!oldTicket.getTitolo().equalsIgnoreCase(formTicket.getTitolo())) {
-            bindingResult.addError(new ObjectError("titolo", "Non è possibile modificare il titolo del ticket"));
-        }
+        //if (!oldTicket.getTitolo().equalsIgnoreCase(formTicket.getTitolo())) {
+        //    System.out.println("DEBUG - Titolo uguale");
+        //    bindingResult.addError(new ObjectError("titolo", "Non è possibile modificare il titolo del ticket"));
+        //}
 
         Optional<Categoria> optionalCategoria = categoriaRepository.findById(categoriaId);
         if(optionalCategoria.isPresent()) {
+            System.out.println("Categoria presente");
             oldTicket.setCategoria(optionalCategoria.get());
         } else {
+            System.out.println("DEBUG - Categoria non presente");
             bindingResult.addError(new ObjectError("categoria", "Categoria non valida"));
         }
-
+        
+        oldTicket.setTitolo(formTicket.getTitolo());
         oldTicket.setDescrizione(formTicket.getDescrizione());
         oldTicket.setStato(formTicket.getStato());
 

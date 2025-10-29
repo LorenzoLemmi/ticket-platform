@@ -28,9 +28,9 @@
                     <div class="col-md-4 text-end">
                         <form th:action="@{|/tickets/updateStatus/${ticket.id}|}" method="post" class="d-inline">
                             <select name="stato" class="form-select form-select-sm text-white bg-primary border-0 d-inline w-auto" onchange="this.form.submit()">
-                                <option value="da_fare" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).da_fare}">Da fare</option>
-                                <option value="in_corso" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).in_corso}">In corso</option>
-                                <option value="completato" th:selected="${ticket.stato == T(com.example.demo.entities.Ticket.StatoTicket).completato}">Completato</option>
+                                <option value="da_fare" th:selected="${ticket.stato.name() == T(com.example.demo.entities.Ticket.StatoTicket).da_fare.name}">Da fare</option>
+                                <option value="in_corso" th:selected="${ticket.stato.name() == T(com.example.demo.entities.Ticket.StatoTicket).in_corso.name}">In corso</option>
+                                <option value="completato" th:selected="${ticket.stato.name() == T(com.example.demo.entities.Ticket.StatoTicket).completato.name}">Completato</option>
                             </select>
                         </form>
                     </div>
@@ -77,8 +77,9 @@
                         Nessuna nota presente.
                     </div>
 
-                    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
-                        successMessage
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span th:text="${successMessage}">SuccessMessage</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <div th:each="nota : ${ticket.noteList}" class="card mb-2 p-2 shadow-sm">

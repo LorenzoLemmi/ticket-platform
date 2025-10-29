@@ -44,13 +44,12 @@
                     <!--Stato-->
                     <div class="mb-3">
                         <label for="stato" class="form-label ps-2">Stato</label>
-                        <select th:field="*{stato}" class="form-select" id="stato" required 
-                                th:errorclass="is-invalid">
-                            <option value="" disabled th:selected="${ticket.stato == null}">Seleziona uno stato</option>
-                            <option value="da_fare">Da fare</option>
-                            <option value="in_corso">In corso</option>
-                            <option value="completato">Completato</option>
+                        <select th:field="*{stato}" class="form-select" id="stato" required th:errorClass="is-invalid">
+                            <option th:value="*{T(com.example.demo.entities.Ticket.StatoTicket).da_fare}">Da fare</option>
+                            <option th:value="*{T(com.example.demo.entities.Ticket.StatoTicket).in_corso}">In corso</option>
+                            <option th:value="*{T(com.example.demo.entities.Ticket.StatoTicket).completato}">Completato</option>
                         </select>
+
                         <div th:if="${#fields.hasErrors('stato')}" class="invalid-feedback">
                             <ul class="mb-0">
                                 <li th:each="err : ${#fields.errors('stato')}" th:text="${err}"></li>

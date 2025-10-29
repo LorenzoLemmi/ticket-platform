@@ -2,13 +2,19 @@ package com.example.demo.entities;
 
 import java.util.List;
 
+import com.example.demo.security.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -23,14 +29,19 @@ public class Operatore {
     @Column(name="nome", nullable=false)
     private String nome;
 
-    @Column(name="email", nullable=false)
+    @Column(name="email", nullable=false, unique = true)
     private String email;
     
     @Column(name="password", nullable=false)
     private String password;
 
-    @Column(name="ruolo", nullable=false)
-    private String ruolo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "operatore_role",
+        joinColumns = @JoinColumn(name = "operatore_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> ruoli;
 
     public enum StatoOperatore {
         disponibile,
@@ -96,14 +107,6 @@ public class Operatore {
         this.password = password;
     }
 
-    public String getRuolo() {
-        return ruolo;
-    }
-
-    public void setRuolo(String ruolo) {
-        this.ruolo = ruolo;
-    }
-
     public StatoOperatore getStato() {
         return stato;
     }
@@ -112,4 +115,11 @@ public class Operatore {
         this.stato = stato;
     }
 
+    public List<Role> getRuoli() {
+        return ruoli;
+    }
+
+    public void setRuoli(List<Role> ruoli) {
+        this.ruoli = ruoli;
+    }
 }
