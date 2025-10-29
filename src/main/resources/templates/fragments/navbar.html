@@ -13,6 +13,13 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/operatori}">Operatori</a>
                 </li>
+            </ul>
+
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <span>Logged User: <strong sec:authentication="name"></strong></span>
+                <span>Roles: <strong sec:authentication="principal.authorities"></strong></span>
+                <a href="/logout" class="btn btn-primary btn-sm">LOGOUT</a>
+            </div>
         </div>
     </div>
 </nav>
