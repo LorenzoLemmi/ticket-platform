@@ -25,16 +25,16 @@
                 <tr>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Stato Personale</th>
-                    <th>Azioni</th>
+                    <th class="text-center">Stato Personale</th>
+                    <th class="text-center">Azioni</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="operatore : ${operatoriList}">
                     <td th:text="${operatore.nome}">Nome</td>
                     <td th:text="${operatore.email}">Email</td>
-                    <td th:text="${operatore.stato}">Stato</td>
-                    <td>
+                    <td th:text="${operatore.stato}" class="text-center">Stato</td>
+                    <td class="text-center">
                         <a th:href="@{|/operatori/${operatore.id}|}" class="btn btn-sm btn-primary"
                         th:if="${operatore.email == #authentication.name or #authorization.expression('hasAuthority(''ADMIN'')')}"
                         >Dettagli</a>

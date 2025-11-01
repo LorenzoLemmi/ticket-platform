@@ -20,4 +20,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> findByOperatoreId(Integer operatoreId);
 
     boolean existsByOperatoreIdAndStatoIn(Integer operatoreId, List<Ticket.StatoTicket> stati);
+
+    List<Ticket> findByCategoriaId(Integer categoriaId);
+
+    List<Ticket> findByStato(Ticket.StatoTicket stato);
 }
