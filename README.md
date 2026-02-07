@@ -1,78 +1,78 @@
+# Ticket Platform – Support Dashboard
 
-# ticket-platform
+Applicazione backend sviluppata con **Java e Spring Boot** per la gestione delle richieste di supporto tecnico di un prodotto.  
+Il sistema consente agli amministratori di gestire e assegnare i ticket agli operatori, applicando regole di business e controlli di accesso basati sui ruoli.
 
-Il progetto prevede la realizzazione di una backoffice per la piattaforma di gestione delle richieste di supporto al team di assistenza tecnica di un prodotto.
+## 🚀 Tecnologie utilizzate
+- Java
+- Spring Boot
+- Spring Data JPA (Hibernate)
+- Spring Security
+- MySQL
+- Thymeleaf
+- Bootstrap
+- Maven
 
-Sviluppiamo un’applicazione Spring che permetta all’utente admin di gestire e ricercare i ticket di supporto assegnandoli agli operatori.
-Sui ticket sono possibili le seguenti operazioni: 
--	creazione, visualizzazione, modifica, eliminazione
--	aggiornamento dello stato (da fare, in corso, completato)
--	aggiunta di una nota
+## 📌 Funzionalità principali
 
-Un ticket deve essere obbligatoriamente assegnato ad un operatore disponibile in fase di creazione. 
-Un operatore è disponibile quando non ha il flag di stato personale “non disponibile” attivo.
+### Gestione Ticket
+- CRUD completo dei ticket
+- Aggiornamento dello stato del ticket:
+  - Da fare
+  - In corso
+  - Completato
+- Assegnazione obbligatoria dei ticket a operatori disponibili
+- Ricerca dei ticket per titolo
+- Filtraggio dei ticket per categoria e stato
 
-Le entità categoria e operatore sono già caricate a DB (non è necessario sviluppare CRUD dedicate a queste risorse).
+### Note ai Ticket
+- Aggiunta di note ai ticket assegnati
+- Visualizzazione delle note con:
+  - autore
+  - data di creazione
+  - contenuto testuale
 
-## Requisiti
+### Gestione Operatori
+- Visualizzazione dei ticket assegnati all’operatore
+- Aggiornamento dello stato dei ticket assegnati
+- Possibilità di impostare lo stato personale “non disponibile”  
+  (solo se non sono presenti ticket in stato *Da fare* o *In corso*)
 
-### Tipologie di utenti:
+### Autenticazione e Autorizzazione
+- Sistema di autenticazione con utenti salvati a database
+- Ruoli supportati:
+  - **ADMIN**: gestione completa dei ticket e dashboard amministrativa
+  - **OPERATORE**: gestione e aggiornamento dei ticket assegnati
+- Controllo degli accessi alle funzionalità tramite Spring Security
 
-**Admin**:
--	è già presente a database con sua email e password
--	può creare, visualizzare e modificare ticket
+### Modellazione dei Dati
+- Relazioni tra le entità:
+  - Ticket
+  - Operatore
+  - Categoria
+  - Nota
+- Utilizzo di JPA/Hibernate per la gestione delle relazioni e della persistenza
 
-**Operatore**:
--	sono utenti già presenti in database, ognuno con propria mail e psw
--	può visualizzare la lista dei ticket a lui assegnati
--	può visualizzare il dettaglio di un ticket a lui assegnato
--	può aggiornare lo stato di un ticket a lui assegnato
--	puoi aggiungere una nota a un ticket a lui assegnato
--	può modificare i propri dati dalla sua pagina tra cui lo stato personale in “non attivo” solo se non ha nemmeno un ticket in stato “da fare” o “in corso”
+### API REST
+- Esposizione di API REST per:
+  - visualizzazione elenco ticket
+  - filtraggio per categoria
+  - filtraggio per stato
 
+### Interfaccia Utente
+- UI server-side con Thymeleaf
+- Dashboard amministrativa in formato tabellare
+- Layout responsive realizzato con Bootstrap
 
+## 🧱 Architettura
+L’applicazione segue un’architettura a livelli:
+- Controller
+- Service
+- Repository
+- Database
 
-
-
-### Dashboard admin
--	visualizzazione tickets in formato tabellare
--	ricerca tickets per stringa di testo sul titolo
--	visualizzazione dettaglio ticket
--	aggiunta di note a un ticket
-
-### Pagina Ticket
--	mostra i dettagli del ticket
--	mostra lo stato
--	mostra l’operatore a cui è assegnato
-
-### Pagina Operatore
--	mostra dettagli operatore
--	mostra la lista di ticket assegnati
-
-### Note ai ticket
-
-Nella pagina di dettaglio di un ticket c’è una sezione per poter visualizzare l’elenco note e lasciare una nuova nota. Per ogni nota visualizzare
--	autore
--	data creazione
--	campo di testo
-
-### Servizi API
-
-Esponi le API per la visualizzazione della risorsa Ticket:
--	visualizzare l’elenco dei ticket
--	filtrare l’elenco dei ticket per categoria
--	filtrare l’elenco dei ticket per stato
-
-
-
-
-
-### Note Aggiuntive
-
-**Validazione**:
-Ricorda di utilizzare la validazione (soprattutto lato server) dei campi per garantire l’inserimento corretto dei dati, in particolare i dati obbligatori.
-
-**Libreria UI**:
-Puoi utilizzare Bootstrap o altra libreria UI per realizzare l’interfaccia del back-office, come ad esempio Tailwind.
-
-
+## ▶️ Avvio del progetto
+1. Clonare il repository
+2. Configurare il database MySQL
+3. Impostare le credenziali nel file `application.properties`
+4. Avviare l’applicazione tramite Spring Boot
